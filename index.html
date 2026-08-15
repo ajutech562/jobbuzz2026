@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JobBuzz - Latest Job Updates</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* HEADER */
+
+        header {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            padding: 18px 6%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #facc15;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* HERO */
+
+        .hero {
+            background: linear-gradient(135deg, #1d4ed8, #4338ca);
+            color: white;
+            padding: 65px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: .9;
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            max-width: 700px;
+            margin: auto;
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            background: #facc15;
+            border: none;
+            padding: 0 25px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 28px;
+        }
+
+        /* FILTERS */
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .filters select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        /* JOB GRID */
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.07);
+            transition: .2s;
+            position: relative;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12);
+        }
+
+        .trending {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .company {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .job-title {
+            font-size: 21px;
+            margin-bottom: 14px;
+        }
+
+        .job-info {
+            margin: 8px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .salary {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .deadline {
+            color: #dc2626;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 11px;
+            border-radius: 7px;
+            text-align: center;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .whatsapp {
+            background: #22c55e;
+            color: white;
+        }
+
+        .call {
+            background: #2563eb;
+            color: white;
+        }
+
+        .details {
+            background: #eef2ff;
+            color: #3730a3;
+        }
+
+        /* ADMIN */
+
+        #adminSection {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,.08);
+            margin-top: 40px;
+        }
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .admin-form input,
+        .admin-form textarea,
+        .admin-form select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .admin-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .admin-btn {
+            background: #111827;
+            color: white;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .job-admin {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.6);
+            z-index: 2000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            max-width: 650px;
+            background: white;
+            margin: 50px auto;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 900px) {
+            .job-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            .navbar {
+                flex-direction: column;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box button {
+                padding: 14px;
+            }
+
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <div class="logo">
+            Job<span>Buzz</span>
+        </div>
+
+        <nav>
+            <a href="#jobs">Jobs</a>
+            <a href="#adminSection" onclick="openAdmin()">Admin</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<section class="hero">
+
+    <h1>Latest Job Updates</h1>
+
+    <p>
+        Find trending jobs, government jobs, private jobs and more.
+    </p>
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search jobs, companies, location..."
+            onkeyup="displayJobs()"
+        >
+
+        <button onclick="displayJobs()">
+            Search
+        </button>
+
+    </div>
+
+</section>
+
+
+<main class="container" id="jobs">
+
+    <div class="section-title">
+
+        <h2>🔥 Trending Jobs</h2>
+
+        <span id="jobCount"></span>
+
+    </div>
+
+
+    <div class="filters">
+
+        <select id="categoryFilter" onchange="displayJobs()">
+
+            <option value="">All Categories</option>
+
+            <option value="IT">IT</option>
+
+            <option value="Government">Government</option>
+
+            <option value="Banking">Banking</option>
+
+            <option value="Healthcare">Healthcare</option>
+
+            <option value="Marketing">Marketing</option>
+
+            <option value="Other">Other</option>
+
+        </select>
+
+
+        <select id="locationFilter" onchange="displayJobs()">
+
+            <option value="">All Locations</option>
+
+            <option value="Kerala">Kerala</option>
+
+            <option value="Kochi">Kochi</option>
+
+            <option value="Calicut">Calicut</option>
+
+            <option value="Thrissur">Thrissur</option>
+
+            <option value="Palakkad">Palakkad</option>
+
+            <option value="Remote">Remote</option>
+
+        </select>
+
+    </div>
+
+
+    <div id="jobGrid" class="job-grid"></div>
+
+
+    <!-- ADMIN PANEL -->
+
+    <section id="adminSection">
+
+        <h2>⚙️ Admin Panel</h2>
+
+        <br>
+
+        <p>
+            Add a new job below. The job will immediately appear on the website.
+        </p>
+
+        <br>
+
+        <form id="jobForm" class="admin-form">
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Job Title"
+                required
+            >
+
+            <input
+                type="text"
+                id="company"
+                placeholder="Company Name"
+                required
+            >
+
+            <input
+                type="text"
+                id="location"
+                placeholder="Location"
+                required
+            >
+
+            <input
+                type="text"
+                id="salary"
+                placeholder="Salary e.g. ₹20,000 - ₹35,000"
+                required
+            >
+
+            <input
+                type="text"
+                id="qualification"
+                placeholder="Qualification"
+                required
+            >
+
+            <input
+                type="text"
+                id="category"
+                placeholder="Category e.g. IT"
+                required
+            >
+
+            <input
+                type="date"
+                id="deadline"
+                required
+            >
+
+            <input
+                type="text"
+                id="phone"
+                placeholder="Phone number"
+                required
+            >
+
+            <textarea
+                id="description"
+                class="full"
+                placeholder="Job description"
+                required
+            ></textarea>
+
+            <textarea
+                id="whatsappMessage"
+                class="full"
+                placeholder="WhatsApp application message"
+            ></textarea>
+
+            <label>
+                <input type="checkbox" id="isTrending">
+                Mark as Trending Job 🔥
+            </label>
+
+            <button class="admin-btn full" type="submit">
+                + Add Job
+            </button>
+
+        </form>
+
+
+        <br>
+        <hr>
+        <br>
+
+        <h3>Manage Jobs</h3>
+
+        <div id="adminJobs"></div>
+
+    </section>
+
+</main>
+
+
+<!-- JOB DETAILS MODAL -->
+
+<div class="modal" id="jobModal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">
+            &times;
+        </span>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <p>
+        © 2026 JobBuzz. All Rights Reserved.
+    </p>
+
+    <p style="margin-top:8px;">
+        Latest job updates every day.
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* --------------------------------
+       DEFAULT JOB DATA
+    -------------------------------- */
+
+    const defaultJobs = [
+
+        {
+            id: 1,
+            title: "Software Developer",
+            company: "ABC Technologies",
+            location: "Kochi",
+            salary: "₹25,000 - ₹50,000",
+            qualification: "BCA / B.Tech / MCA",
+            category: "IT",
+            deadline: "2026-09-15",
+            phone: "919876543210",
+            description:
+                "We are looking for a Software Developer to join our development team. Candidates should have basic programming knowledge and good communication skills.",
+            whatsappMessage:
+                "Hello, I am interested in the Software Developer position. Please share more details.",
+            trending: true
+        },
+
+        {
+            id: 2,
+            title: "Banking Assistant",
+            company: "XYZ Bank",
+            location: "Thrissur",
+            salary: "₹22,000 - ₹32,000",
+            qualification: "Any Degree",
+            category: "Banking",
+            deadline: "2026-09-20",
+            phone: "919876543210",
+            description:
+                "Banking Assistant vacancy. Freshers can apply. Good communication and computer knowledge preferred.",
+            whatsappMessage:
+                "Hello, I would like to apply for the Banking Assistant job.",
+            trending: true
+        },
+
+        {
+            id: 3,
+            title: "Staff Nurse",
+            company: "City Hospital",
+            location: "Calicut",
+            salary: "₹30,000 - ₹40,000",
+            qualification: "B.Sc Nursing / GNM",
+            category: "Healthcare",
+            deadline: "2026-09-10",
+            phone: "919876543210",
+            description:
+                "Staff Nurse vacancy available. Candidates should have valid nursing qualifications.",
+            whatsappMessage:
+                "Hello, I am interested in the Staff Nurse vacancy.",
+            trending: false
+        }
+
+    ];
+
+
+    /* --------------------------------
+       LOAD JOBS
+    -------------------------------- */
+
+    let jobs =
+        JSON.parse(localStorage.getItem("jobs")) ||
+        defaultJobs;
+
+
+    /* --------------------------------
+       DISPLAY JOBS
+    -------------------------------- */
+
+    function displayJobs() {
+
+        const grid =
+            document.getElementById("jobGrid");
+
+        const search =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+        const category =
+            document
+            .getElementById("categoryFilter")
+            .value;
+
+        const location =
+            document
+            .getElementById("locationFilter")
+            .value;
+
+
+        let filtered =
+            jobs.filter(job => {
+
+                const matchesSearch =
+                    job.title.toLowerCase().includes(search) ||
+                    job.company.toLowerCase().includes(search) ||
+                    job.location.toLowerCase().includes(search) ||
+                    job.category.toLowerCase().includes(search);
+
+                const matchesCategory =
+                    !category ||
+                    job.category === category;
+
+                const matchesLocation =
+                    !location ||
+                    job.location === location;
+
+                return (
+                    matchesSearch &&
+                    matchesCategory &&
+                    matchesLocation
+                );
+
+            });
+
+
+        document.getElementById("jobCount").innerText =
+            filtered.length + " Jobs";
+
+
+        grid.innerHTML = "";
+
+
+        if (filtered.length === 0) {
+
+            grid.innerHTML = `
+                <div style="
+                    grid-column:1/-1;
+                    text-align:center;
+                    padding:50px;
+                    background:white;
+                    border-radius:10px;
+                ">
+                    <h3>No jobs found</h3>
+                    <p>Try another search.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        filtered.forEach(job => {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "job-card";
+
+
+            card.innerHTML = `
+
+                ${
+                    job.trending
+                    ? `<div class="trending">🔥 TRENDING</div>`
+                    : ""
+                }
+
+                <div class="company">
+                    ${escapeHTML(job.company)}
+                </div>
+
+                <div class="job-title">
+                    ${escapeHTML(job.title)}
+                </div>
+
+                <div class="job-info">
+                    📍 ${escapeHTML(job.location)}
+                </div>
+
+                <div class="job-info salary">
+                    💰 ${escapeHTML(job.salary)}
+                </div>
+
+                <div class="job-info">
+                    🎓 ${escapeHTML(job.qualification)}
+                </div>
+
+                <div class="job-info">
+                    🏷️ ${escapeHTML(job.category)}
+                </div>
+
+                <div class="deadline">
+                    ⏰ Apply before:
+                    ${formatDate(job.deadline)}
+                </div>
+
+                <div class="buttons">
+
+                    <button
+                        class="btn details"
+                        onclick="showDetails(${job.id})"
+                    >
+                        Details
+                    </button>
+
+                    <a
+                        class="btn whatsapp"
+                        target="_blank"
+                        href="${getWhatsAppLink(job)}"
+                    >
+                        WhatsApp
+                    </a>
+
+                    <a
+                        class="btn call"
+                        href="tel:+${job.phone}"
+                    >
+                        Call
+                    </a>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        });
+
+    }
+
+
+    /* --------------------------------
+       WHATSAPP LINK
+    -------------------------------- */
+
+    function getWhatsAppLink(job) {
+
+        const message =
+            job.whatsappMessage ||
+            `Hello, I am interested in the ${job.title} position at ${job.company}. Please share more details.`;
+
+        return `https://wa.me/${job.phone}?text=${encodeURIComponent(message)}`;
+
+    }
+
+
+    /* --------------------------------
+       JOB DETAILS
+    -------------------------------- */
+
+    function showDetails(id) {
+
+        const job =
+            jobs.find(j => j.id === id);
+
+        if (!job) return;
+
+
+        document.getElementById("modalContent").innerHTML = `
+
+            <h2>${escapeHTML(job.title)}</h2>
+
+            <p>
+                <strong>Company:</strong>
+                ${escapeHTML(job.company)}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                ${escapeHTML(job.location)}
+            </p>
+
+            <p>
+                <strong>Salary:</strong>
+                ${escapeHTML(job.salary)}
+            </p>
+
+            <p>
+                <strong>Qualification:</strong>
+                ${escapeHTML(job.qualification)}
+            </p>
+
+            <p>
+                <strong>Category:</strong>
+                ${escapeHTML(job.category)}
+            </p>
+
+            <p>
+                <strong>Last Date:</strong>
+                ${formatDate(job.deadline)}
+            </p>
+
+            <p>
+                <strong>Job Description:</strong>
+            </p>
+
+            <p>
+                ${escapeHTML(job.description)}
+            </p>
+
+            <div class="buttons">
+
+                <a
+                    class="btn whatsapp"
+                    target="_blank"
+                    href="${getWhatsAppLink(job)}"
+                >
+                    Apply on WhatsApp
+                </a>
+
+                <a
+                    class="btn call"
+                    href="tel:+${job.phone}"
+                >
+                    Call Now
+                </a>
+
+            </div>
+
+        `;
+
+
+        document.getElementById("jobModal")
+            .style.display = "block";
+
+    }
+
+
+    function closeModal() {
+
+        document.getElementById("jobModal")
+            .style.display = "none";
+
+    }
+
+
+    /* --------------------------------
+       ADMIN PANEL
+    -------------------------------- */
+
+    function openAdmin() {
+
+        const password =
+            prompt("Enter Admin Password:");
+
+        if (password === "admin123") {
+
+            document.getElementById("adminSection")
+                .style.display = "block";
+
+            window.scrollTo({
+                top:
+                    document.getElementById("adminSection")
+                    .offsetTop - 80,
+                behavior: "smooth"
+            });
+
+            displayAdminJobs();
+
+        } else {
+
+            alert("Wrong password!");
+
+        }
+
+    }
+
+
+    /* --------------------------------
+       ADD JOB
+    -------------------------------- */
+
+    document
+        .getElementById("jobForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const newJob = {
+
+                id: Date.now(),
+
+                title:
+                    document.getElementById("title").value,
+
+                company:
+                    document.getElementById("company").value,
+
+                location:
+                    document.getElementById("location").value,
+
+                salary:
+                    document.getElementById("salary").value,
+
+                qualification:
+                    document.getElementById("qualification").value,
+
+                category:
+                    document.getElementById("category").value,
+
+                deadline:
+                    document.getElementById("deadline").value,
+
+                phone:
+                    document.getElementById("phone").value
+                    .replace(/\D/g, ""),
+
+                description:
+                    document.getElementById("description").value,
+
+                whatsappMessage:
+                    document.getElementById("whatsappMessage").value,
+
+                trending:
+                    document.getElementById("isTrending").checked
+
+            };
+
+
+            jobs.unshift(newJob);
+
+
+            saveJobs();
+
+
+            this.reset();
+
+
+            displayJobs();
+
+            displayAdminJobs();
+
+
+            alert("Job added successfully!");
+
+        });
+
+
+    /* --------------------------------
+       ADMIN JOB LIST
+    -------------------------------- */
+
+    function displayAdminJobs() {
+
+        const container =
+            document.getElementById("adminJobs");
+
+        container.innerHTML = "";
+
+
+        jobs.forEach(job => {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "job-admin";
+
+
+            div.innerHTML = `
+
+                <div>
+
+                    <strong>
+                        ${escapeHTML(job.title)}
+                    </strong>
+
+                    <br>
+
+                    <small>
+                        ${escapeHTML(job.company)}
+                        -
+                        ${escapeHTML(job.location)}
+                    </small>
+
+                </div>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteJob(${job.id})"
+                >
+                    Delete
+                </button>
+
+            `;
+
+
+            container.appendChild(div);
+
+        });
+
+    }
+
+
+    /* --------------------------------
+       DELETE JOB
+    -------------------------------- */
+
+    function deleteJob(id) {
+
+        if (!confirm("Delete this job?")) {
+            return;
+        }
+
+
+        jobs =
+            jobs.filter(job => job.id !== id);
+
+
+        saveJobs();
+
+        displayJobs();
+
+        displayAdminJobs();
+
+    }
+
+
+    /* --------------------------------
+       SAVE JOBS
+    -------------------------------- */
+
+    function saveJobs() {
+
+        localStorage.setItem(
+            "jobs",
+            JSON.stringify(jobs)
+        );
+
+    }
+
+
+    /* --------------------------------
+       FORMAT DATE
+    -------------------------------- */
+
+    function formatDate(date) {
+
+        if (!date) return "Not specified";
+
+        const d = new Date(date);
+
+        return d.toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+    }
+
+
+    /* --------------------------------
+       SECURITY
+    -------------------------------- */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* --------------------------------
+       CLOSE MODAL WHEN CLICKING OUTSIDE
+    -------------------------------- */
+
+    window.onclick = function(event) {
+
+        const modal =
+            document.getElementById("jobModal");
+
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+
+    };
+
+
+    /* --------------------------------
+       INITIAL LOAD
+    -------------------------------- */
+
+    displayJobs();
+
+</script>
+
+</body>
+</html>
