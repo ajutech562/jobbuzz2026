@@ -599,7 +599,7 @@
     <div class="navbar">
 
         <div class="logo">
-            Job<span>Buzz</span>
+            Job<span>vra</span>
         </div>
 
         <nav>
@@ -1067,6 +1067,11 @@
                 });
 
             });
+
+            // Newest jobs first
+jobs.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+});
 
 
             firebaseReady = true;
